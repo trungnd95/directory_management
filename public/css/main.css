@@ -1,0 +1,77 @@
+/**
+*	 Sidebar 
+**/ 
+
+div.user-panel {
+	margin-bottom: 50px;
+}
+
+/*
+*	Icon edit
+*/
+img.edit {
+	width: 40px;
+	height: 25px;
+	margin-right: 5px;
+}
+
+/**
+*	User panel
+*/
+.user-panel {
+	position: static;
+}
+
+/**
+*	Button Add Image Avatar
+*/
+.fileinput-button {
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+}
+
+.fileinput-button input {
+    cursor: pointer;
+    direction: ltr;
+    font-size: 200px;
+    margin: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+/**
+*   Department List Page:  ;
+*/
+
+.show-edit-delete {
+    display: none;
+}
+
+table#list-departments tr:hover div.show-edit-delete {
+    display: block;
+}
+
+/**
+ * form select delete action 
+ */
+.form-list-select {
+    width: 150px;
+    float: left;
+}
+
+/**
+ * Form search employee
+ */
+#search-employee {
+    width: 200px;
+}
+#search-department {
+    width: 200px;
+    margin-left: 5px;
+}
+#search-btn {
+    margin-right: 60px;
+}
