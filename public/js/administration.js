@@ -42,6 +42,7 @@ $(document).ready(function(){
 		if(!level) {
 			$('.err-level').removeClass('hidden');
 		}else {
+			$('.loading').removeClass('hidden');
 			//Else Send ajax
 			$("#modal-id-1").modal('hide').delay('500');
 			var url = "http://directory.dev/administration/add";
@@ -54,6 +55,7 @@ $(document).ready(function(){
 			$('#add-ad').find("input[name='add-username']").val('');
 			$('#add-ad').find("select[name='add-level']:first-child").find('option:first-child').attr('selected');
 
+			
 			//Send ajax
 			$.ajax({
 				url: url,
@@ -63,6 +65,7 @@ $(document).ready(function(){
 				cache : false,
 				success: function(result){
 					console.log(result.id);
+					$('.loading').addClass('hidden');
 					var str = '<tr><td>'+result.id+'</td><td><img src="http://directory.dev/public/upload/images/default-user.png" width="100px" height="100px" /></td><td>'+result.username+'</td><td>'+result.email+'</td><td>'+result.level+'</td>';
 					str += '<td><a href="http://directory.dev/administration/edit/'+ result.id +'" class="edit-cart" id=""><img class="tooltip-test edit" data-original-title="Update" '+ 'src="http://directory.dev/public/images/edit.png"' + 'alt=""></a>';
 					str += '<a class="delete-admin delete-admin-'+ result.id+'" data-toggle="modal" href="#modal-delete-" data-target="#modal-delete" val="'+ (result.id) +'"><img class="tooltip-test" data-original-title="Remove"  src="http://directory.dev/public/images/remove.png" alt=""></a></td></tr>';
@@ -97,6 +100,7 @@ $(document).ready(function(){
 				error: function(err) {
 					console.log(err);
 					sweetAlert("Oops...", "Something went wrong!", "error");
+					$('.loading').addClass('hidden');
 				}
 
 

@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Auth;
+use Alert;
 
 class AuthController extends Controller
 {
@@ -103,8 +104,10 @@ class AuthController extends Controller
          );
          
          if(Auth::attempt($login, $remember)) {
-            return redirect('/');
+            Alert::success("Đăng nhập thành công")->persistent("Close");
+            return redirect()->route('departments.index');
          } else {
+            Alert::error("Thông tin đăng nhập không chính xác")->persistent("Close");
             return redirect()->back()->withErrors(['Thông tin đăng nhập không chính xác!']);
          }
     }

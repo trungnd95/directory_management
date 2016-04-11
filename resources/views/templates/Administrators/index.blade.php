@@ -99,6 +99,7 @@ List Administrators
     @endif
   </div>
 </div>
+@include('partials.load-ajax')
 <!-- Modal to add administrator -->
 <div class="modal fade" id="modal-id-1">
   <div class="modal-dialog" role="document">

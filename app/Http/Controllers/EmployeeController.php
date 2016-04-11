@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Employee;
 use App\Department;
 use Validator,DB;
+use Alert;
 
 class EmployeeController extends Controller
 {
@@ -25,13 +26,13 @@ class EmployeeController extends Controller
                         ->join('departments','employees.department_id','=','departments.id')
                         ->select('employees.*',DB::raw('departments.name as department_name'))
                         ->where('employees.department_id','=',$department_id->id)
-                        ->get();
+                        ->paginate(10);
                 //Solution 2: Eager loading 
             
             // $employees = Department::with('employee')->find($department_id) ;
                         // dd($employees);
     	}else {
-    		$employees = Employee::all();
+    		$employees = Employee::paginate(10);
     	}
 
         $departments = Department::all();
@@ -100,7 +101,8 @@ class EmployeeController extends Controller
             'email'         => Request::get('email'),
             'address'       => Request::get('address'),
             'department_id' => Request::get('department')
-        ]);  
+        ]); 
+        Alert::success("Added Employee")->persistent("Close"); 
         return redirect()->route('employees.index')->with(['flash_level'=>'success' , 'flash_message'=>'Success! Added employee !!']); 
     }
 
@@ -264,6 +266,17 @@ class EmployeeController extends Controller
         $employee_key = ((Request::get('search-employee')) != null) ? Request::get('search-employee') : '';
         $department_slug = Request::get('search-department');
         return redirect()->route('employees.getSearch',[$department_slug,$employee_key]);
+    }
+
+    public function searchAjax()
+    {
+        if(Request::ajax())
+        {
+            $key_search = Request::get('key_search');
+            $results = Employee::select('*')->where('name' ,'LIKE', '%'.$key_search.'%')->get();
+            $call_view = view("templates.Employees.ajax-search",['results'=>$results])->render();
+            return response()->json($call_view);
+        }
     }
 }
 // End of file

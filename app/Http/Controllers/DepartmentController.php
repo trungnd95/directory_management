@@ -15,7 +15,7 @@ class DepartmentController extends Controller
     **/
     public function index()
     {
-    	$departments = Department::select('*')->get();
+    	$departments = Department::paginate('10');
     	return view('templates.Departments.index',compact('departments'));
     }
 
@@ -40,7 +40,7 @@ class DepartmentController extends Controller
 		$validator = Validator::make(Request::all(),[
     		'name' 			=> 'required|max:30|unique:departments',
     		'office_phone'  => 'required|max:13',
-    		'office_code'   => 'required',
+    		'office_code'   => 'required|unique:departments',
     		'manager'		=> 'required',
             'address'       => 'required',
             'email_contact' => 'required'
@@ -51,6 +51,7 @@ class DepartmentController extends Controller
     		'office_phone.requied'  => 'Please enter department phone',
     		'office_phone.max' 		=> 'Department phone is too long',
     		'office_code.required'  => 'Please enter department address',
+            'office_code.unique'    => 'Office code is exist',
     		'manager.required'  	=> 'Please enter department manager',
             'address.required'      => 'Please enter department address',
             'email_contact.required'      => 'Please enter department email to contact',

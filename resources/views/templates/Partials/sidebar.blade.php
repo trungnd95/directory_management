@@ -26,7 +26,7 @@
 
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu">
-      <li class="header">HEADER</li>
+      <li class="header">Directory Management</li>
       <!-- Optionally, you can add icons to the links -->
       @if(\Auth::check())
       <li class="active"><a href="{{route('administration.index')}}"><i class="fa fa-lock"></i><span>Administrators</span></a></li>
@@ -49,6 +49,14 @@
           @endif
         </ul>
       </li>
+      @if(Auth::check())
+        <li class="treeview">
+          <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i><span>Feedback</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a href="{{route('feedback.listFeedBack')}}"><i class="fa fa-list"></i>All feedbacks</a></li>
+          </ul>
+        </li>
+      @endif
     </ul><!-- /.sidebar-menu -->
   </section>
   <!-- /.sidebar -->

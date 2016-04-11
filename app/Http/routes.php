@@ -23,7 +23,6 @@
 	    */
 	    Route::auth();
 
-
 	   /**
 		*	Homepage
 		*/
@@ -31,6 +30,17 @@
 		    return view('templates.index');
 		});
 
+		/**
+		 *	Feed back 
+		 */
+		Route::get('/feedback',[
+			'as'	=> 'guest.feedback',
+			'uses'	=> 'FeedbackController@feedback'
+		]);
+		Route::post('/feedback',[
+			'as'	=> 'guest.sendFeedback',
+			'uses'	=> 'FeedbackController@sendFeedback'
+		]);
 
 		/**
 		*	User management. 
@@ -160,7 +170,7 @@
 				'uses' 	=> 'EmployeeController@detail'
 			]);
 
-			//Search employee 
+			//Search employee with department
 			Route::get('/search/{deparment}/{employee?}',[
 				'as'	=> 'employees.getSearch',
 				'uses' 	=> 'EmployeeController@getSearch'
@@ -169,6 +179,28 @@
 				'as' 	=> 'employees.postSearch',
 				'uses'	=> 'EmployeeController@postSearch'
 			]);
+
+			//Search single employee
+			Route::get('/search-ajax/result',[
+				'as'	=> 'employees.search.ajax',
+				'uses'	=> 'EmployeeController@searchAjax'
+			]);
 		});//End of route group employees
+		
+		/**
+		 * Feedback process
+		 */
+		Route::group(['prefix' => 'manage/feedback','middleware'=> 'auth'],function(){
+			
+			Route::get('/list',[
+				'as' 	=> 'feedback.listFeedBack',
+				'uses'	=> 'FeedbackController@listFeedback'
+			]);
+
+			Route::post('/{id}/update',[
+				'as'	=> 'feedback.update',
+				'uses'	=> 'FeedbackController@update'
+			]);
+		});
 
 	});

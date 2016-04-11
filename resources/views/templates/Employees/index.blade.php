@@ -4,7 +4,7 @@
 @section ('templates.body.headTitle')
 @if(Request::url() == 'http://directory.dev/employees/index')
 List Employees
-<a href="#"   class="btn btn-primary btn-success"><i class="fa fa-plus"></i> Add new</a>
+<a href="{{route('employees.add')}}"   class="btn btn-primary btn-success"><i class="fa fa-plus"></i> Add new</a>
 @elseif($employees != null)
 List Employees of {{ $employees[0]->department_name}} department
 @endif
@@ -19,11 +19,13 @@ List Employees of {{ $employees[0]->department_name}} department
           {!! csrf_field() !!}
           <div class="row" style="margin:20px 10px;">
             <div class="col-lg-3">
+              @if(Auth::check())
               <select class="form-control form-list-select" name="selectDelete">
-                <option value="">Bulk Actions</option>
+                <option value="">Actions</option>
                 <option value="delete">Delete</option>
               </select>
               <a class="btn btn-block btn-default form-list-button" name="apply" value="apply" id="aApply" >Apply</a>
+              @endif
             </div>
             <div class="col-lg-offset-3 col-lg-6">
               <div class="input-group">
@@ -44,7 +46,7 @@ List Employees of {{ $employees[0]->department_name}} department
           </div>
           <div class="row">
             <div class="col-md-12">
-              <div class="table-responsive">
+              <div class="table-responsive ajax-result">
                 <table class="table table-hover" id="list-departments">
                   <tr class="text-center">
                     <th>ID</th>
@@ -53,7 +55,9 @@ List Employees of {{ $employees[0]->department_name}} department
                     <th>Job title</th>
                     <th> Email </th>
                     <th> Department </th>
-                    <th> Action </th>
+                    @if(Auth::check())
+                      <th> Action </th>
+                    @endif
                   </tr>
                   @foreach($employees as $employee)
                   {{-- {{ dd($employee)}} --}}
@@ -79,12 +83,35 @@ List Employees of {{ $employees[0]->department_name}} department
                     <?php $department = DB::table('departments')->select('name')->where('id','=',$employee->department_id)->first()?>
                     <td> {{ $department->name}}</td>
                   @endif
-                  <td>
-                    <a href="{{route('employees.edit',$employee->id)}}">Edit</a> | <a href="" class="text-danger delete-employee-{{$employee->id}}" data-id = "{!! $employee->id !!}" data-toggle="modal" data-target="#modal-delete-employee" >Delete</a>
-                  </td>
+                  @if(Auth::check())
+                    <td>
+                      <a href="{{route('employees.edit',$employee->id)}}">Edit</a> | <a href="" class="text-danger delete-employee-{{$employee->id}}" data-id = "{!! $employee->id !!}" data-toggle="modal" data-target="#modal-delete-employee" >Delete</a>
+                    </td>
+                  @endif
                 </tr>
                 @endforeach
               </table>   
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+            @if ($employees->lastPage() > 1)
+              <ul class="pagination" style="float:right; margin-top: -5px;">
+              @if ($employees->currentPage() != 1)
+                <li class="paginate_button previous">
+                  <a href="{{ str_replace('/?', '?', $articles->url($articles->currentPage() - 1)) }}">Previous</a>
+                </li>
+                @endif
+                @for ($i = 1;  $i <= $employees->lastPage(); $i++)
+                <li class="paginate_button {{ ($employees->currentPage() == $i) ? 'active' : '' }}">
+                <a href="{{ str_replace('/?', '?', $employees->url($i)) }}">{{ $i }}</a>
+                </li>
+                @endfor
+                @if ($employees->currentPage() != $employees->lastPage() &&  $employees->lastPage() > 1)
+                <li class="paginate_button next"><a href="{{ str_replace('/?', '?', $employees->url($employees->currentPage() + 1)) }}">Next</a></li>
+                @endif
+              </ul>
+              @endif
             </div>
           </div>
         </div>

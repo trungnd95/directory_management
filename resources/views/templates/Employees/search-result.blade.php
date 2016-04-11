@@ -10,7 +10,8 @@ Search Result
   <div class="col-xs-12">
     <div class="box">
       <div class="box-body  no-padding">
-        <form action="" method="POST" class="form-horizontal" role="form" id="form-index-employee">
+      @if($employees != null)
+        <form action="{{route('employees.postSearch')}}" method="POST" class="form-horizontal" role="form" id="form-index-employee">
           {!! csrf_field() !!}
           <div class="row" style="margin:20px 10px;">
             <div class="col-lg-offset-6 col-lg-6">
@@ -100,6 +101,9 @@ Search Result
             </div>
           </div><!-- End model-->
         </form>
+        @else 
+          <p><strong>No result found</strong></p>
+        @endif
       </div><!-- /.box-body -->
     </div><!-- /.box -->
   </div>

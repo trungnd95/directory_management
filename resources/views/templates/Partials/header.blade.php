@@ -3,7 +3,7 @@
   <!-- Logo -->
   <a href="index2.html" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><b>A</b>LT</span>
+    <span class="logo-mini">Trung Manucian</span>
     <!-- logo for regular state and mobile devices -->
     <span class="logo-lg"><b>Trung Manucian</b></span>
   </a>
@@ -19,11 +19,13 @@
       <ul class="nav navbar-nav">
         <!-- feed back of user  -->
         <li class="feedback">
-            <a href="#" ><i class="fa fa-comment"></i> Feedback</a>
+            <a href="{{route('guest.feedback')}}" ><i class="fa fa-comment"></i> Feedback</a>
         </li>
-        <li class="logout">
-          <a href="{{ url('/logout')}}"> <i class="fa fa-sign-out"></i> Logout</a>
-        </li>
+        @if(Auth::check())
+          <li class="logout">
+            <a href="{{ url('/logout')}}"> <i class="fa fa-sign-out"></i> Logout</a>
+          </li>
+        @endif
       </ul>
     </div>
   </nav>

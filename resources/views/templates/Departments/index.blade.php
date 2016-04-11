@@ -5,9 +5,6 @@
 List Departments
 <a href="{{route('departments.add')}}"   class="btn btn-primary btn-success"><i class="fa fa-plus"></i> Add new</a>
 @endsection
-
-
-
 @section('templates.body.content')
 <div class="row">
   <div class="col-xs-12">
@@ -29,9 +26,11 @@ List Departments
 					<td>{{ $department->id }}</td>	
 					<td class="department-name">
 						<a href="javascript:void(0)" data-toggle="modal" data-target="#modal-view-department" department-name = "{{$department->name}}" office-phone="{{$department->office_phone}}" office-code = "{{$department->office_code}}" manager="{{$department->manager}}" address="{{$department->address}}" email-contact="{{$department->email_contact}}"><span>{{ $department->name }}</span></a>
-						<div class="show-edit-delete">
-							<a href="javascript:void(0)" class="edit-department" val="{{$department->id}}">Edit</a> | <a style="color: red; cursor: pointer;" data-toggle="modal" data-target="#modal-delete-department" class="delete-department-{{$department->id}}" data-id ="{{$department->id}}">Delete</a>
-						</div>
+            @if(Auth::check())
+  						<div class="show-edit-delete">
+  							<a href="javascript:void(0)" class="edit-department" val="{{$department->id}}">Edit</a> | <a style="color: red; cursor: pointer;" data-toggle="modal" data-target="#modal-delete-department" class="delete-department-{{$department->id}}" data-id ="{{$department->id}}">Delete</a>
+  						</div>
+            @endif
 					</td>	
 					<td class="office_phone">{{ $department->office_phone }}</td>	
 					<td class="office_code">{{ $department->office_code }}</td>	
@@ -43,7 +42,7 @@ List Departments
 					<td><input type="text" name="name" value="{{$department->name}}" class="form-control" /></td>
 					<td><input type="text" name="office_phone" value="{{$department->office_phone}}" class="form-control" /></td>
 					<td><input type="text" name="office_code" value="{{$department->office_code}}" class="form-control" /></td>
-					<td><input type="text" name="manager" value="{{$department->manager}}" /></td>
+					<td><input type="text" name="manager" value="{{$department->manager}}" class="form-control" /></td>
 					<td><a href="javascript:void(0)" class="save-edit-{{ $department->id}}" val="">Save</a></td>
 				</tr>
             @endforeach
@@ -118,6 +117,27 @@ List Departments
         </form>
       </div><!-- /.box-body -->
     </div><!-- /.box -->
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    @if ($departments->lastPage() > 1)
+    <ul class="pagination" style="float:right; margin-top: -5px;">
+      @if ($departments->currentPage() != 1)
+      <li class="paginate_button previous">
+        <a href="{{ str_replace('/?', '?', $articles->url($articles->currentPage() - 1)) }}">Previous</a>
+      </li>
+      @endif
+      @for ($i = 1;  $i <= $departments->lastPage(); $i++)
+      <li class="paginate_button {{ ($departments->currentPage() == $i) ? 'active' : '' }}">
+        <a href="{{ str_replace('/?', '?', $departments->url($i)) }}">{{ $i }}</a>
+      </li>
+      @endfor
+      @if ($departments->currentPage() != $departments->lastPage() &&  $departments->lastPage() > 1)
+      <li class="paginate_button next"><a href="{{ str_replace('/?', '?', $departments->url($departments->currentPage() + 1)) }}">Next</a></li>
+      @endif
+    </ul>
+    @endif
   </div>
 </div>
 @endsection

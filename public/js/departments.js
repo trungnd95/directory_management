@@ -13,7 +13,6 @@ $(document).ready(function(){
             var office_phone  = $(this).parent().parent().find("input[name='office_phone']").val();
             var office_code   = $(this).parent().parent().find("input[name='office_code']").val();
             var manager       = $(this).parent().parent().find("input[name='manager']").val();
-            alert(id);
             //send ajax 
             $.ajax({
                 url:url,

@@ -27,4 +27,35 @@ $(document).ready(function(){
           }
         });
     });
+
+    /**
+     * Ajax search employee
+     */
+     var delay = (function(){
+      var timer = 0;
+      return function(callback, ms){
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+      };
+    })();
+    $("#search-employee").keyup(function(event) {
+        delay(function(){
+            var _token = $("#form-index-employee").find("input[name='_token']").val();
+            var key_search  = $("#search-employee").val();
+            var url =  "http://directory.dev/employees/search-ajax/result";
+            $.ajax({
+                url : url,
+                type: "GET",
+                dataType: "JSON",
+                cache:false,
+                data: {'key_search': key_search},
+                success: function(data){  
+                    $('.ajax-result').html(data);
+                },
+                error: function(){
+
+                }
+            });
+        }, 500 );
+    });
 });
