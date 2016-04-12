@@ -3,7 +3,9 @@
 @section('templates.head.title','List Departments')
 @section('templates.body.headTitle')
 List Departments
-<a href="{{route('departments.add')}}"   class="btn btn-primary btn-success"><i class="fa fa-plus"></i> Add new</a>
+@if(Auth::check())
+  <a href="{{route('departments.add')}}"   class="btn btn-primary btn-success"><i class="fa fa-plus"></i> Add new</a>
+@endif
 @endsection
 @section('templates.body.content')
 <div class="row">

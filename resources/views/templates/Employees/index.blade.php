@@ -4,7 +4,9 @@
 @section ('templates.body.headTitle')
 @if(Request::url() == 'http://directory.dev/employees/index')
 List Employees
-<a href="{{route('employees.add')}}"   class="btn btn-primary btn-success"><i class="fa fa-plus"></i> Add new</a>
+@if(Auth::check())
+  <a href="{{route('employees.add')}}"   class="btn btn-primary btn-success"><i class="fa fa-plus"></i> Add new</a>
+@endif
 @elseif($employees != null)
 List Employees of {{ $employees[0]->department_name}} department
 @endif
@@ -59,6 +61,7 @@ List Employees of {{ $employees[0]->department_name}} department
                       <th> Action </th>
                     @endif
                   </tr>
+                  @if(count($employees) > 0)
                   @foreach($employees as $employee)
                   {{-- {{ dd($employee)}} --}}
                   <tr class="td-data-{{$employee->id}}">
@@ -90,6 +93,9 @@ List Employees of {{ $employees[0]->department_name}} department
                   @endif
                 </tr>
                 @endforeach
+                @else 
+                <p><strong>Không có nhân viên nào </strong></p>
+                @endif
               </table>   
             </div>
           </div>

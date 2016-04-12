@@ -26,7 +26,7 @@
 
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu">
-      <li class="header">Directory Management</li>
+      <li class="header"><a href="{{url('/')}}">Directory Management<br/>(Home page)</a></li>
       <!-- Optionally, you can add icons to the links -->
       @if(\Auth::check())
       <li class="active"><a href="{{route('administration.index')}}"><i class="fa fa-lock"></i><span>Administrators</span></a></li>

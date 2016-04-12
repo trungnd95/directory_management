@@ -31,6 +31,14 @@
 		});
 
 		/**
+		 * Configuration: When user type every thing to url . 
+		 * It'll redirect to homepage 
+		 */
+		// Route::any('{parameters?}',function(){
+		// 	return view('templates.index');
+		// })->where('parameters','(.*)');
+
+		/**
 		 *	Feed back 
 		 */
 		Route::get('/feedback',[
