@@ -52,7 +52,7 @@ class UserController extends Controller
             $level = Request::get('level');
             $password = str_random(8);
             $token = Request::get('_token');
-            $confirmation_code = str_random(10);
+            $ation_code = str_random(10);
             $data = array('password'=> $password,'confirmation_code' => $confirmation_code);
             User::create([
                 "username" => $username,

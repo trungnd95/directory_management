@@ -9,16 +9,15 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('public/admin/dist/css/AdminLTE.min.css')}}">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{asset('public/css/main.css')}}">
     <link rel="stylesheet" href="{{asset('public/css/style6.css')}}">
     <link rel="stylesheet" href="{{asset('public/css/load-ajax.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/custom.css')}}">
     <!-- Sweet alert CSS -->
     <link rel="stylesheet" href="{{asset('public/sweetalert/sweetalert-master/dist/sweetalert.css')}}">
     
-    <link rel="stylesheet" href="{{asset('public/admin/dist/css/skins/skin-blue.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/skin-blue.min.css')}}">
 
   </head><!-- head -->
