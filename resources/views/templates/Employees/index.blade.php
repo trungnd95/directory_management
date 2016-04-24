@@ -21,13 +21,6 @@ List Employees of {{ $employees[0]->department_name}} department
           {!! csrf_field() !!}
           <div class="row" style="margin:20px 10px;">
             <div class="col-lg-3">
-              @if(Auth::check())
-              <select class="form-control form-list-select" name="selectDelete">
-                <option value="">Actions</option>
-                <option value="delete">Delete</option>
-              </select>
-              <a class="btn btn-block btn-default form-list-button" name="apply" value="apply" id="aApply" >Apply</a>
-              @endif
             </div>
             <div class="col-lg-offset-3 col-lg-6">
               <div class="input-group">

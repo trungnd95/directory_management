@@ -38,17 +38,19 @@ $(document).ready(function(){
         timer = setTimeout(callback, ms);
       };
     })();
+
     $("#search-employee").keyup(function(event) {
         delay(function(){
             var _token = $("#form-index-employee").find("input[name='_token']").val();
             var key_search  = $("#search-employee").val();
+            var department_search =  $('#search-department').val();
             var url =  "http://directory.dev/employees/search-ajax/result";
             $.ajax({
                 url : url,
                 type: "GET",
                 dataType: "JSON",
                 cache:false,
-                data: {'key_search': key_search},
+                data: {'key_search': key_search,'department_search':department_search},
                 success: function(data){  
                     $('.ajax-result').html(data);
                 },
@@ -58,4 +60,24 @@ $(document).ready(function(){
             });
         }, 100 );
     });
+
+    $('#search-department').change(function(){
+        var _token = $("#form-index-employee").find("input[name='_token']").val();
+       var url =  "http://directory.dev/employees/search-ajax/result";
+       var department_search = $(this).val();
+       var key_search  = $("#search-employee").val();
+       $.ajax({
+                url : url,
+                type: "GET",
+                dataType: "JSON",
+                cache:false,
+                data: {'key_search': key_search,'department_search':department_search},
+                success: function(data){  
+                    $('.ajax-result').html(data);
+                },
+                error: function(){
+
+                }
+            });
+    })
 });

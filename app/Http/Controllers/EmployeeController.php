@@ -272,8 +272,22 @@ class EmployeeController extends Controller
     {
         if(Request::ajax())
         {
-            $key_search = Request::get('key_search');
-            $results = Employee::select('*')->where('name' ,'LIKE', '%'.$key_search.'%')->get();
+            $key_search = trim(Request::get('key_search'));
+            $department_search = Request::get('department_search');
+
+            if($department_search == 'all')
+            {
+                $results = Employee::select('*')->where('name' ,'LIKE', '%'.$key_search.'%')->get();    
+            }   
+            else if($key_search == '' && $department_search != 'all')
+            {
+                $department_id =  Department::select('id')->where('slug','=',$department_search)->first();
+                $results = Employee::where('department_id','=',$department_id->id)->get();
+            }
+            else {
+                $department_id =  Department::select('id')->where('slug','=',$department_search)->first();
+                $results = Employee::where('department_id','=',$department_id->id)->where('name' ,'LIKE', '%'.$key_search.'%')->get();
+            }
             $call_view = view("templates.Employees.ajax-search",['results'=>$results])->render();
             return response()->json($call_view);
         }

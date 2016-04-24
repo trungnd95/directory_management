@@ -16,7 +16,7 @@
 								<div class="ch-info">
 									<div class="ch-info-front ch-img-1"></div>
 									<div class="ch-info-back">
-										<a  class="text-center inside-link" href="{{route('departments.index')}}">Department</a>
+										<a  class="text-center inside-link" href="{{route('departments.index')}}">Departments</a>
 									</div>	
 								</div>
 							</div>

@@ -5,9 +5,7 @@
 @section('auth.body.title','Login')
 
 @section('auth.body.content')
-<div class="login-box-body">
-    <p class="login-box-msg">Login</p>
-        
+<div class="login-box-body">      
     <form method="post" method="{{ url('/login') }}">
         {!! csrf_field() !!}
       <div class="form-group has-feedback">
@@ -28,7 +26,7 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng Nhập</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
         </div>
         <!-- /.col -->
       </div>
