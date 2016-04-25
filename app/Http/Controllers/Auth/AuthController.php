@@ -104,11 +104,11 @@ class AuthController extends Controller
          );
          
          if(Auth::attempt($login, $remember)) {
-            Alert::success("Đăng nhập thành công")->persistent("Close");
+            Alert::success("Login success")->persistent("Close");
             return redirect()->route('departments.index');
          } else {
-            Alert::error("Thông tin đăng nhập không chính xác")->persistent("Close");
-            return redirect()->back()->withErrors(['Thông tin đăng nhập không chính xác!']);
+            Alert::error("Information access denied")->persistent("Close");
+            return redirect()->back()->withErrors(['Information access denied!']);
          }
     }
 
