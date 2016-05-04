@@ -7,7 +7,7 @@ $(document).ready(function(){
         $('.edit-depart-'+id).removeClass('hidden');
         $('.save-edit-'+ id).click(function(){
             
-            var url           = 'http://directory.dev/departments/edit/' + id;
+            var url           = '/departments/edit/' + id;
             var token         = $('#form-index-department').find("input[name='_token']").val();
             var name          = $(this).parent().parent().find("input[name='name']").val();
             var office_phone  = $(this).parent().parent().find("input[name='office_phone']").val();
@@ -48,7 +48,7 @@ $(document).ready(function(){
     $('.confirm_del_department').on('click',function(){
         $("#modal-delete-department").modal('hide').delay('500');
         id =  $(this).data('id');
-        var url = "http://directory.dev/departments/delete/" + id;
+        var url = "/departments/delete/" + id;
         var token = $('#form-index-department').find("input[name='_token']").val();
         $.ajax({
           url: url,

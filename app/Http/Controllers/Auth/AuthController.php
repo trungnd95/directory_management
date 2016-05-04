@@ -104,7 +104,7 @@ class AuthController extends Controller
          );
          
          if(Auth::attempt($login, $remember)) {
-            Alert::success("Login success")->persistent("Close");
+            Alert::success("Login success !!!")->persistent("Close");
             return redirect()->route('departments.index');
          } else {
             Alert::error("Information access denied")->persistent("Close");

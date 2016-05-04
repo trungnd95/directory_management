@@ -45,7 +45,7 @@ $(document).ready(function(){
 			$('.loading').removeClass('hidden');
 			//Else Send ajax
 			$("#modal-id-1").modal('hide').delay('500');
-			var url = "http://directory.dev/administration/add";
+			var url = "/administration/add";
 			var token = $('#add-ad').find("input[name='_token']").val();
 			var username = $('#add-ad').find("input[name='add-username']").val();
 			var email = $('#add-ad').find("input[name='add-email']").val();
@@ -66,8 +66,8 @@ $(document).ready(function(){
 				success: function(result){
 					console.log(result.id);
 					$('.loading').addClass('hidden');
-					var str = '<tr><td>'+result.id+'</td><td><img src="http://directory.dev/public/upload/images/default-user.png" width="100px" height="100px" /></td><td>'+result.username+'</td><td>'+result.email+'</td><td>'+result.level+'</td>';
-					str += '<td><a href="http://directory.dev/administration/edit/'+ result.id +'" class="edit-cart" id=""><img class="tooltip-test edit" data-original-title="Update" '+ 'src="http://directory.dev/public/images/edit.png"' + 'alt=""></a>';
+					var str = '<tr><td>'+result.id+'</td><td><img src="/public/upload/images/default-user.png" width="100px" height="100px" /></td><td>'+result.username+'</td><td>'+result.email+'</td><td>'+result.level+'</td>';
+					str += '<td><a href="/administration/edit/'+ result.id +'" class="edit-cart" id=""><img class="tooltip-test edit" data-original-title="Update" '+ 'src="http://directory.dev/public/images/edit.png"' + 'alt=""></a>';
 					str += '<a class="delete-admin delete-admin-'+ result.id+'" data-toggle="modal" href="#modal-delete-" data-target="#modal-delete" val="'+ (result.id) +'"><img class="tooltip-test" data-original-title="Remove"  src="http://directory.dev/public/images/remove.png" alt=""></a></td></tr>';
 					$('#list-admin').append(str);
 					// $('body').append(str1);
@@ -120,7 +120,7 @@ $(document).ready(function(){
 		$('.confirm_del').on('click',function(){
 				$("#modal-delete").modal('hide').delay('500');
 				id =  $(this).data('id');
-				var url = "http://directory.dev/administration/delete/" + id;
+				var url = "/administration/delete/" + id;
 				var token = $('#form-index-admin').find("input[name='_token']").val();
 				$.ajax({
 					url: url,

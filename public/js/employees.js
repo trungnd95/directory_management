@@ -9,7 +9,7 @@ $(document).ready(function(){
     $('.confirm_del_employee').on('click',function(){
         $("#modal-delete-employee").modal('hide').delay('500');
         id =  $(this).data('id');
-        var url = "http://directory.dev/employees/delete/" + id;
+        var url = "/employees/delete/" + id;
         var token = $('#form-index-employee').find("input[name='_token']").val();
         $.ajax({
           url: url,
@@ -44,7 +44,7 @@ $(document).ready(function(){
             var _token = $("#form-index-employee").find("input[name='_token']").val();
             var key_search  = $("#search-employee").val();
             var department_search =  $('#search-department').val();
-            var url =  "http://directory.dev/employees/search-ajax/result";
+            var url =  "/employees/search-ajax/result";
             $.ajax({
                 url : url,
                 type: "GET",
@@ -63,7 +63,7 @@ $(document).ready(function(){
 
     $('#search-department').change(function(){
         var _token = $("#form-index-employee").find("input[name='_token']").val();
-       var url =  "http://directory.dev/employees/search-ajax/result";
+       var url =  "/employees/search-ajax/result";
        var department_search = $(this).val();
        var key_search  = $("#search-employee").val();
        $.ajax({
