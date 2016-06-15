@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Auth;
 use Alert;
+use Hash; 
 
 class AuthController extends Controller
 {
@@ -100,16 +101,38 @@ class AuthController extends Controller
         if(isset($request->remember) && $request->remember == 1) $remember = true;
         $login = array(
                 'email'     => $request->email,
-                'password'  => $request->password
+                'password'  => $request->password,
+                'confirmed' => 1
          );
-         
-         if(Auth::attempt($login, $remember)) {
-            Alert::success("Login success !!!")->persistent("Close");
-            return redirect()->route('departments.index');
-         } else {
-            Alert::error("Information access denied")->persistent("Close");
-            return redirect()->back()->withErrors(['Information access denied!']);
-         }
+        $user =  User::where('email','=',$request->email)->first();
+        if(count($user) > 0){
+            if(Hash::check($request->password, $user->password))
+            {
+                if($user->confirmed == 1)
+                {
+                    if(Auth::attempt($login, $remember))
+                    {
+                        Alert::success("Login success !!!")->persistent("Close");
+                        return redirect()->route('departments.index');            
+                    }
+                }
+                else {
+                    // Alert::error("Information access denied")->persistent("Close");
+                    return redirect()->back()->withErrors(['Please visit your email to see confimration account instruction !!']);
+                }
+            }else
+            {
+                    return redirect()->back()->withErrors(['Ooops !!! Information access denied !!']);          
+            }
+        }
+            
+         // if(Auth::attempt($login, $remember)) {
+         //    Alert::success("Login success !!!")->persistent("Close");
+         //    return redirect()->route('departments.index');
+         // } else {
+         //    Alert::error("Information access denied")->persistent("Close");
+         //    return redirect()->back()->withErrors(['Information access denied!']);
+         // }
     }
 
 }

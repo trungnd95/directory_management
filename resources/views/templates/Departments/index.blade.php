@@ -15,6 +15,7 @@ List Departments
         <form action="" method="POST" class="form-horizontal" role="form" id="form-index-department">
           {!! csrf_field() !!}
           <table class="table table-hover" id="list-departments">
+          <thead>
             	<tr class="text-center">
 	              <th>ID</th>
 	              <th>Department Name</th>
@@ -23,6 +24,8 @@ List Departments
 	              <th> Manager </th>
 	              <th>List employees</th>
             	</tr>
+              </thead>
+              <tbody>
             @foreach($departments as $department)
 				<tr class="td-data-{{$department->id}}">
 					<td>{{ $department->id }}</td>	
@@ -48,6 +51,7 @@ List Departments
 					<td><a href="javascript:void(0)" class="save-edit-{{ $department->id}}" val="">Save</a></td>
 				</tr>
             @endforeach
+            </tbody>
           </table>    
           <!-- Modal popup to confirm delete cat -->
           <div class="modal fade" id="modal-delete-department">
@@ -121,7 +125,7 @@ List Departments
     </div><!-- /.box -->
   </div>
 </div>
-<div class="row">
+{{-- <div class="row">
   <div class="col-lg-12">
     @if ($departments->lastPage() > 1)
     <ul class="pagination" style="float:right; margin-top: -5px;">
@@ -141,5 +145,5 @@ List Departments
     </ul>
     @endif
   </div>
-</div>
+</div> --}}
 @endsection

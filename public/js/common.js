@@ -28,4 +28,10 @@ $(document).ready(function(){
    //    radioClass: 'iradio_square-blue',
    //    increaseArea: '20%' // optional
    //  });
+   $('#list-admin').DataTable({
+      "lengthMenu": [ [5, 10, 15, -1], [5, 10, 15, "All"] ]
+   });
+   $('#list-departments').DataTable({
+      "lengthMenu": [ [5, 10, 15, -1], [5, 10, 15, "All"] ]
+   });
 })

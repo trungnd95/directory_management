@@ -26,13 +26,13 @@ class EmployeeController extends Controller
                         ->join('departments','employees.department_id','=','departments.id')
                         ->select('employees.*',DB::raw('departments.name as department_name'))
                         ->where('employees.department_id','=',$department_id->id)
-                        ->paginate(10);
+                        ->paginate(5);
                 //Solution 2: Eager loading 
             
             // $employees = Department::with('employee')->find($department_id) ;
                         // dd($employees);
     	}else {
-    		$employees = Employee::paginate(10);
+    		$employees = Employee::paginate(5);
     	}
 
         $departments = Department::all();

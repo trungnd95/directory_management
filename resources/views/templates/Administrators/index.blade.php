@@ -17,15 +17,18 @@ List Administrators
         <form action="" method="POST" class="form-horizontal" role="form" id="form-index-admin">
           {!! csrf_field() !!}
           <table class="table table-hover" id="list-admin">
-            <tr class="text-center">
-              <th>ID</th>
-              <th>Avatar</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Action</th>
-            </tr>
-            @foreach($admins as $admin)
+            <thead>
+              <tr class="text-center">
+                <th>ID</th>
+                <th>Avatar</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Action</th>
+              </tr>  
+            </thead>
+            <tbody>
+              @foreach($admins as $admin)
             <tr>
               <td>{{ $admin->id }}</td>
               <td>
@@ -52,8 +55,9 @@ List Administrators
                 @endif
               </td>
             </tr>
-            
             @endforeach
+            </tbody>
+            
           </table>    
           <!-- Modal popup to confirm delete admin -->
           <div class="modal fade" id="modal-delete">
@@ -78,7 +82,7 @@ List Administrators
     </div><!-- /.box -->
   </div>
 </div>
-<div class="row">
+{{-- <div class="row">
   <div class="col-lg-12">
     @if ($admins->lastPage() > 1)
     <ul class="pagination" style="float:right; margin-top: -5px;">
@@ -98,7 +102,7 @@ List Administrators
     </ul>
     @endif
   </div>
-</div>
+</div> --}}
 @include('partials.load-ajax')
 <!-- Modal to add administrator -->
 <div class="modal fade" id="modal-id-1">

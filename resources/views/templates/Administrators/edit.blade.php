@@ -15,13 +15,21 @@ Edit Administrator
           <div class="box-body">
             <div class="form-group">
               <label for="username">Username</label>
-              <input type="text" class="form-control" name="username" id="username" value="{{old('username',isset($admin) ? $admin->username : null)}}" placeholder="Enter username" />
+              <input type="text" class="form-control" name="username" id="username" value="{{old('username',isset($admin) ? $admin->username : null)}}" placeholder="Enter username" 
+              @if(\Auth::user()->id !=  $admin->id)
+                disabled
+              @endif
+              />
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" value="{{old('email',isset($admin) ? $admin->email : null)}}" />
+              <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" value="{{old('email',isset($admin) ? $admin->email : null)}}" 
+              @if(\Auth::user()->id !=  $admin->id)
+                disabled
+              @endif
+              />
             </div>
-            
+            @if(\Auth::user()->id ==  $admin->id)
             <div class="form-group">
               <label for="avatar">Avatar</label>
               @if($admin->avatar == null)
@@ -50,23 +58,23 @@ Edit Administrator
               </div>
               @endif
             </div>
-
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="{{old('password',isset($admin) ? $admin->password : null)}}" />
-            </div>
-            @if(\Auth::user()->role == 'owner')
+            @endif
+            @if(\Auth::user()->level == 'owner')
             <div class="form-group">
               <label for="level">Level</label>
               <select name="level" class="form-control">
                <option value="owner"
-               @if($admin->role == 'owner')
-               selected >Owner</option>
+               @if($admin->level == 'owner')
+               selected 
                @endif
+               >Owner
+               </option>
+               
                <option value="admin"
-               @if($admin->role == 'admin')
-               selected >Admin</option>
+               @if($admin->level == 'admin')
+               selected 
                @endif
+               >Admin</option>
              </select>
            </div>
            @endif

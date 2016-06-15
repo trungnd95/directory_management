@@ -9,6 +9,8 @@ use App\User;
 use Request;
 use Hash,Mail;
 use Illuminate\Support\Facades\Input;
+use Alert; 
+
 class UserController extends Controller
 {
     /**
@@ -17,7 +19,7 @@ class UserController extends Controller
     */
     public function index() 
     {
-        $admins = User::paginate(10);
+        $admins = User::all();
     	return view('templates.Administrators.index')->with('admins',$admins);
     }
 
@@ -52,7 +54,7 @@ class UserController extends Controller
             $level = Request::get('level');
             $password = str_random(8);
             $token = Request::get('_token');
-            $ation_code = str_random(10);
+            $confirmation_code = str_random(10);
             $data = array('password'=> $password,'confirmation_code' => $confirmation_code);
             User::create([
                 "username" => $username,
@@ -164,8 +166,9 @@ class UserController extends Controller
         }
 
         $new_ad = User::where('confirmation_code',$confirmation_code)->first();
-        
-        return view('templates.Administrators.confirmation',compact('new_ad'));
+        $new_ad->confirmed =  1;
+        $new_ad->save();
+        return view('templates.Administrators.confirmation')->with(['flash_level'=>'success','flash_message'=> 'Account actived! Please change password you desire!','new_ad'=>$new_ad]);
     }
 
     /**
@@ -174,6 +177,7 @@ class UserController extends Controller
     **/
     public function postConfirm($confirmation_code)
     {
+        
         $validator = Validator::make(Request::all(),[
             'password'      => 'required|confirmed|min:5'
         ],[
@@ -184,14 +188,60 @@ class UserController extends Controller
         if($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
-
         $user = User::where('confirmation_code',$confirmation_code)->first();
-        
         // Validate the new password length...
         $user->password = Hash::make(Request::get('password'));
+        $user->confirmation_code  = null;
         $user->save();
         // dd(Hash::make(Request::get(password)));
         return redirect('/logout')->with(['flash_level'=>'success','flash_message'=>'Your profile updated']);
+    }
+
+    //Change password 
+    /**
+     * [viewChangePassword description]
+     * @return [type] [description]
+     */
+    public function viewChangePassword($id)
+    {
+        return view('templates.Administrators.changePassword');
+    }
+
+    /**
+     * [postChangePassword description]
+     * @return [type] [description]
+     */
+    public function postChangePassword($id)
+    {
+        $user = User::findOrFail($id);
+        $new_password = Request::get('new_password');
+        $user->password = Hash::make($new_password);
+        $user->save();
+        Alert::success('Password changed !!!')->persistent('Close');
+        return redirect()->route('administration.index');
+    }
+
+    /**
+     * [checkOldPassword description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function checkOldPassword($id)
+    {
+        if(Request::ajax())
+        {
+            $id = Request::get('id');
+            // dd(Request::get('val'));
+            $val = Request::get('val');
+            $user = User::findOrFail($id);
+            
+            if(Hash::check($val, $user->password))
+            {
+                return response()->json('ok');
+            }else {
+                return response()->json('Mật khẩu cũ không đúng');
+            }
+        }
     }
 
 }

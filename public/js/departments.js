@@ -58,7 +58,10 @@ $(document).ready(function(){
           data : {'id':id, '_token':token},
           success: function (result){
 
-            $('.delete-department-'+result).parent().parent().parent().hide();
+            // $('.delete-department-'+result).parent().parent().parent().hide();
+            var t = $('#list-departments').DataTable();
+            t.row($('.delete-department-'+result).parents('tr')).remove().draw();
+
             swal("Success!","Deleted!" , 'success');
           },
           error: function(err) {

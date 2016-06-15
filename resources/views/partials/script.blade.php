@@ -13,6 +13,10 @@
   <script src="{{asset('public/js/modernizr.custom.79639.js')}}"></script>
   <!-- LIB -->
   <script src="{{asset('public/js/app.min.js')}}"></script>
+  {{-- Data table  --}}
+  <!-- Data Table--> 
+  <script src="{{asset('public/dataTable/jquery.dataTables.min.js')}}"></script>
+  <script src="{{asset('public/dataTable/dataTables.bootstrap.min.js')}}"></script>
   <!-- Sweet Alert  -->
   <script src="{{asset('public/sweetalert/sweetalert-master/dist/sweetalert.min.js')}}"></script>
   @include('sweet::alert')

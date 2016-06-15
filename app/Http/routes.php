@@ -54,33 +54,38 @@
 		*	User management. 
 		*/
 
-		Route::group(['prefix'=>'administration','middleware'=>'auth'],function () {
+		Route::group(['prefix'=>'administration'],function () {
 
 			//List all administrator of site
 			Route::get('/index',[
+				'middleware'=>'auth',
 				'as' 	=> 'administration.index',
 				'uses'  =>  'UserController@index'
 			]);
 
 			//Add a administator
 			Route::post('/add',[
+				'middleware'=>'auth',
 				'as'	=> 'administration.add',
 				'uses' 	=> 'UserController@add'
 			]);
 
 			//Delete a administrator
 			Route::get('/delete/{id}',[
+				'middleware'=>'auth',
 				'as'   => 'administation.destroy',
 				'uses' => 'UserController@destroy'
 			]);
 
 			//Edit 
 			Route::get('/edit/{id}' ,[
+				'middleware'=>'auth',
 				'as'  	=> 'administration.edit',
 				'uses'  => 'UserController@edit',
 			]);
 
 			Route::post('/edit/{id}',[
+				'middleware'=>'auth',
 				'as' 	=> 'administation.update',
 				'uses'  => 'UserController@update',
 			]);
@@ -96,7 +101,26 @@
 					'uses'  => 'UserController@postConfirm'
 				]);
 
-			});			
+			});	
+
+			//Change Password
+			Route::get('/{id}/change-password',[
+				'middleware'=>'auth',
+				'as'    => 'administrator.changePassword.getView',
+				'uses'  => 'UserController@viewChangePassword'
+				]);
+
+			Route::post('/{id}',[
+				'middleware'=>'auth',
+				'as'    => 'administrator.changePassword.postData',
+				'uses'  => 'UserController@postChangePassword'
+				]);
+
+			Route::post('/{id}/check-old-password',[
+				'middleware'=>'auth',
+				'as'    => 'administrator.changePassword.check',
+				'uses'  => 'UserController@checkOldPassword'
+				]);		
 
 		});//End of route administrations
 

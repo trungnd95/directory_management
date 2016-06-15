@@ -19,5 +19,8 @@
     <link rel="stylesheet" href="{{asset('public/sweetalert/sweetalert-master/dist/sweetalert.css')}}">
     
     <link rel="stylesheet" href="{{asset('public/css/skin-blue.min.css')}}">
-
+    {{-- Data table  --}}
+    <!-- Data Table --> 
+    <link rel="stylesheet" type="text/css" href="{{asset('public/dataTable/jquery.dataTables.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('public/dataTable/dataTables.bootstrap.min.css')}}">
   </head><!-- head -->

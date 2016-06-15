@@ -1,7 +1,9 @@
 /**
 *	 Sidebar 
 **/ 
-
+.box {
+    padding: 10px ;
+}
 div.user-panel {
 	margin-bottom: 50px;
 }

@@ -64,13 +64,23 @@ $(document).ready(function(){
 				data: {'username':username, 'email':email, '_token':token, 'level':level},
 				cache : false,
 				success: function(result){
-					console.log(result.id);
+					// console.log(result.id);
+					t = $('#list-admin').DataTable();
 					$('.loading').addClass('hidden');
-					var str = '<tr><td>'+result.id+'</td><td><img src="/public/upload/images/default-user.png" width="100px" height="100px" /></td><td>'+result.username+'</td><td>'+result.email+'</td><td>'+result.level+'</td>';
-					str += '<td><a href="/administration/edit/'+ result.id +'" class="edit-cart" id=""><img class="tooltip-test edit" data-original-title="Update" '+ 'src="http://directory.dev/public/images/edit.png"' + 'alt=""></a>';
-					str += '<a class="delete-admin delete-admin-'+ result.id+'" data-toggle="modal" href="#modal-delete-" data-target="#modal-delete" val="'+ (result.id) +'"><img class="tooltip-test" data-original-title="Remove"  src="http://directory.dev/public/images/remove.png" alt=""></a></td></tr>';
-					$('#list-admin').append(str);
-					// $('body').append(str1);
+					t.row.add([
+						result.id,
+						'<img src="/public/upload/images/default-user.png" width="100px" height="100px" />',
+						result.username,
+						result.email,
+						result.level,
+						'<a href="/administration/edit/'+ result.id +'" class="edit-cart" id=""><img class="tooltip-test edit" data-original-title="Update" '+ 'src="http://directory.dev/public/images/edit.png"' + 'alt=""></a><a class="delete-admin delete-admin-'+ result.id+'" data-toggle="modal" href="#modal-delete-" data-target="#modal-delete" val="'+ (result.id) +'"><img class="tooltip-test" data-original-title="Remove"  src="http://directory.dev/public/images/remove.png" alt=""></a>'
+
+					]).draw(false);
+					// var str = '<tr><td>'+result.id+'</td><td><img src="/public/upload/images/default-user.png" width="100px" height="100px" /></td><td>'+result.username+'</td><td>'+result.email+'</td><td>'+result.level+'</td>';
+					// str += '<td><a href="/administration/edit/'+ result.id +'" class="edit-cart" id=""><img class="tooltip-test edit" data-original-title="Update" '+ 'src="http://directory.dev/public/images/edit.png"' + 'alt=""></a>';
+					// str += '<a class="delete-admin delete-admin-'+ result.id+'" data-toggle="modal" href="#modal-delete-" data-target="#modal-delete" val="'+ (result.id) +'"><img class="tooltip-test" data-original-title="Remove"  src="http://directory.dev/public/images/remove.png" alt=""></a></td></tr>';
+					// $('#list-admin').append(str);
+					// // $('body').append(str1);
 					swal("Success!","Added!" , 'success');
 					// $('.delete-admin').on('click',function(){
 					// 	var id = result.id;
@@ -129,8 +139,9 @@ $(document).ready(function(){
 					cache : false,
 					data : {'id':id, '_token':token},
 					success: function (result){
-
-						$('.delete-admin-'+result).parent().parent().hide();
+						var t = $('#list-admin').DataTable();
+						// $('.delete-admin-'+result).parent().parent().hide();
+						t.row($('.delete-admin-'+result).parents('tr')).remove().draw();
 						swal("Success!","Deleted!" , 'success');
 					},
 					error: function(err) {
@@ -140,7 +151,29 @@ $(document).ready(function(){
 		})
 	// });
 
-	
+	//Change password for admin
+	$("#old_password").keyup(function(){
+		var val = $(this).val();
+		var id = $(this).data('id');
+		var _token = $("#form-change-password").find("input[name='_token']").val();
+		$.ajax({
+			url: '/administration/' + id + '/check-old-password',
+			dataType: 'JSON',
+			cache:false,
+			type:'POST',
+			data: {'_token':_token, 'val':val,'id':id},
+			success: function(result)
+			{
+				if(result != 'ok')
+				{
+					$('.error_old_password').removeClass('hidden');
+				}
+				else {
+					$('.error_old_password').addClass('hidden');
+				}
+			}
+		});
+	});
 
 })
 
